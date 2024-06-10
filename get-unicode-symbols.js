@@ -176,6 +176,7 @@ function randomIntegerInRange(range) {
   return Math.trunc(Math.random() * (range[1]+1 - range[0]) + range[0]);
 }
 
+// https://stackoverflow.com/a/63520666/1836776
 // function charIsSupported(v) {
 //The first argument is the character you want to test, and the second argument is the font you want to test it in.
 //If the second argument is left out, it defaults to the font of the <body> element.
