@@ -16,8 +16,12 @@ const STAGE_Z_MAX = -200 + TILE_DIM/2;
 const debug = false;
 
 const fontSpec = `${CANVAS_DIM * 0.8}px Tahoma`;
-const letters = [].concat(getUnicodeExampleLetters(),['🤣','🚗','⌨','🦘','💩','💣']);
+const letters = ['Keyman', 'Keyman', 'Keyman'].concat(getUnicodeExampleLetters(),['🤣','🚗','⌨','🦘','💩','💣']);
+while(letters.length < MAX_TILES) {
+  letters.push(...letters);
+}
 
+const keymanImage = document.getElementById('keyman-image');
 //THREEJS RELATED VARIABLES
 
 
@@ -192,14 +196,19 @@ class Hero {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = this.fontSpec;
-    const tx = ctx.measureText(this.text);
 
-    // Constrain this to fit in the box
-    const oldSize = (CANVAS_DIM * 0.8);
-    const newWidth = oldSize / (tx.actualBoundingBoxRight + tx.actualBoundingBoxLeft) * oldSize;
-    const newHeight = oldSize / (tx.actualBoundingBoxBottom + tx.actualBoundingBoxTop) * oldSize;
-    ctx.font= `${Math.min(newWidth,newHeight)}px Tahoma`;
-    ctx.fillText(this.text, CANVAS_DIM / 2, CANVAS_DIM / 2);
+    if(this.text == 'Keyman') {
+      ctx.drawImage(keymanImage, CANVAS_DIM * 0.1, CANVAS_DIM * 0.1, CANVAS_DIM * 0.8, CANVAS_DIM * 0.8);
+    } else {
+      const tx = ctx.measureText(this.text);
+
+      // Constrain this to fit in the box
+      const oldSize = (CANVAS_DIM * 0.8);
+      const newWidth = oldSize / (tx.actualBoundingBoxRight + tx.actualBoundingBoxLeft) * oldSize;
+      const newHeight = oldSize / (tx.actualBoundingBoxBottom + tx.actualBoundingBoxTop) * oldSize;
+      ctx.font= `${Math.min(newWidth,newHeight)}px Tahoma`;
+      ctx.fillText(this.text, CANVAS_DIM / 2, CANVAS_DIM / 2);
+    }
 
     if(debug) {
       this.writeDebug(this.canvas);
